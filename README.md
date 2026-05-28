@@ -91,7 +91,8 @@ O projeto segue uma separação simples entre:
 
 O projeto é compatível com PyInstaller:
 
-pyinstaller --noconfirm --onefile --windowed --icon="assets/list.ico" --add-data "assets;assets" --name="CRUD" frontend.py 
+pyinstaller --noconfirm --onefile --windowed --icon="assets/list.ico" --add-data "assets;assets" --name="CRUD" frontend.py
+ 
 ---
 
 ## ⚠️ Limitações
