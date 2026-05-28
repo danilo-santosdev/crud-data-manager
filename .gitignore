@@ -1,0 +1,25 @@
+# Ambientes virtuais
+venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Build
+build/
+dist/
+
+# Outros diretórios
+exemplos_construcao/
+AppDir/
+
+# PyInstaller
+*.spec
+
+# AppImage
+*.AppImage
+*.AppDir/
+
+# Scripts auxiliares
+build.sh
+pyinstaller.txt
