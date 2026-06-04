@@ -124,8 +124,8 @@ Este projeto é open source e pode ser utilizado livremente para fins educaciona
 ## 👨‍💻 Autor
 
 **Danilo Santos**  
-🐙 GitHub: https://github.com/danilo-santos-python  
-🌐 Repositório: https://github.com/danilo-santos-python/crud-data-manager
+🐙 GitHub: https://github.com/danilo-santosdev
+🌐 Repositório: https://github.com/danilo-santosdev/crud-data-manager
 
 ---
 
