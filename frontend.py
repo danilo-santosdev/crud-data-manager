@@ -59,6 +59,27 @@ class GerenciadorIcone:
             print(f"Erro ao carregar ícone: {e}")
 
 class AlertaDados(tk.Toplevel):
+
+    #---------------Bloco para tratar múltiplas janelas---------------
+    instancia = None
+
+    @classmethod
+    def mostrar(cls, master, mensagem=""):
+
+        if cls.instancia is not None:
+            if cls.instancia.winfo_exists():
+
+                cls.instancia.mensagem_alerta.configure(
+                    text=mensagem
+                )
+
+                cls.instancia.focus_force()
+                return cls.instancia
+
+        cls.instancia = cls(master, mensagem)
+        return cls.instancia
+    #-----------------------------------------------------------------
+
     def __init__(self, master, mensagem = ""):
         super().__init__(master)
 
@@ -130,9 +151,26 @@ class AlertaDados(tk.Toplevel):
 
     def fecha_popup_alerta(self):
         # self.grab_release()
+        AlertaDados.instancia = None
         self.destroy()
 
 class PopupSobre(tk.Toplevel):
+
+    #---------------Bloco para tratar múltiplas janelas---------------
+    instancia = None
+
+    @classmethod
+    def mostrar(cls, master):
+
+        if cls.instancia is not None:
+            if cls.instancia.winfo_exists():
+                cls.instancia.focus_force()
+                return cls.instancia
+
+        cls.instancia = cls(master)
+        return cls.instancia
+    #-----------------------------------------------------------------
+
     def __init__(self, master):
         super().__init__(master)
 
@@ -216,9 +254,26 @@ class PopupSobre(tk.Toplevel):
         )
 
     def fecha_popup(self):
+        PopupSobre.instancia = None
         self.destroy()
 
 class PopupEditar(tk.Toplevel):
+
+     #---------------Bloco para tratar múltiplas janelas---------------
+    instancia = None
+
+    @classmethod
+    def mostrar(cls, master, area_dados):
+
+        if cls.instancia is not None:
+            if cls.instancia.winfo_exists():
+                cls.instancia.focus_force()
+                return cls.instancia
+
+        cls.instancia = cls(master, area_dados)
+        return cls.instancia
+    #-----------------------------------------------------------------
+
     def __init__(self, master, area_dados):
         super().__init__(master)
 
@@ -348,6 +403,7 @@ class PopupEditar(tk.Toplevel):
     # Função de interatividade popup editar-interface:
     def fecha_popup_edit(self):
         # self.grab_release()
+        PopupEditar.instancia = None
         self.destroy()
 
     # Verificar texto no TextBox "area_dados":
@@ -495,7 +551,7 @@ class Interface(ctk.CTk):
             font=ctk.CTkFont(size=13)
         )
         self.info_sobre.grid(row=3, column=3, sticky="se", padx=15, pady=5)
-        self.info_sobre.bind("<Button-1>", lambda e: PopupSobre(self))  # abre janela popup
+        self.info_sobre.bind("<Button-1>", lambda e: PopupSobre.mostrar(self))  # abre janela popup
 
     # -----------------------------------------------------------------
     # Funções intermediárias para verificar se há dados no TextBox
@@ -507,7 +563,7 @@ class Interface(ctk.CTk):
         texto = self.area_dados.get("1.0", "end").strip()
 
         if not texto:
-            AlertaDados(self)  # chama janela de alerta
+            AlertaDados.mostrar(self, "Não há dados disponíveis.")  # chama janela de alerta
             return False
 
         return True
@@ -518,7 +574,7 @@ class Interface(ctk.CTk):
 
         if not texto:
             mensagem = "Insira primeiro algum dado."
-            AlertaDados(self, mensagem)
+            AlertaDados.mostrar(self, mensagem)
             return
 
         InserirDado.inserir(self.entrada_dados, self.area_dados)
@@ -535,16 +591,16 @@ class Interface(ctk.CTk):
         # Não há nenhum dado:
         if not texto:
             mensagem = "Insira primeiro algum dado."
-            AlertaDados(self, mensagem)
+            AlertaDados.mostrar(self, mensagem)
             return
 
         # Há dados mas não há seleção:
         if not selecao:
             mensagem = "Para editar selecione algum dado."
-            AlertaDados(self, mensagem)
+            AlertaDados.mostrar(self, mensagem)
             return
 
-        PopupEditar(self, self.area_dados)
+        PopupEditar.mostrar(self, self.area_dados)
 
     def acao_excluir(self):
 
@@ -554,13 +610,13 @@ class Interface(ctk.CTk):
         # Não há nenhum dado:
         if not texto:
             mensagem = "Não há dados para excluir."
-            AlertaDados(self, mensagem)
+            AlertaDados.mostrar(self, mensagem)
             return
 
         # Há dados mas não há seleção:
         if not selecao:
             mensagem = "Para excluir selecione algum dado."
-            AlertaDados(self, mensagem)
+            AlertaDados.mostrar(self, mensagem)
             return
 
         ExcluirDado.excluir(self.area_dados)
@@ -572,7 +628,7 @@ class Interface(ctk.CTk):
         # Não há nenhum dado:
         if not texto:
             mensagem = "Não há dados para limpar."
-            AlertaDados(self, mensagem)
+            AlertaDados.mostrar(self, mensagem)
             return
 
         ApagarDados.limpar_dados(self.area_dados)
