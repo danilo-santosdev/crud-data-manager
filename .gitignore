@@ -11,7 +11,7 @@ dist/
 
 # Outros diretórios
 exemplos_construcao/
-AppDir/
+meu_crud_v1.AppDir/
 
 # PyInstaller
 *.spec
